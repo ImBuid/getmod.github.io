@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rút gọn URL</title>
+</head>
+<body>
+    <h2>Rút gọn URL</h2>
+    <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" alt="Thumbnail Video">
+    <button onclick="shortenUrl()">Rút gọn</button>
+    <p id="result"></p>
+
+    <script>
+        function shortenUrl() {
+            const linkGoc = encodeURIComponent('https://web-can-rut-gon.com');
+            const apiToken = 'dc1478423ea744df70578eb0a9374270066308d2ecf140db686a180bac7609ed';
+            const apiUrl = `https://yeumoney.com/QL_api.php?token=${apiToken}&url=${linkGoc}&format=json`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(result => {
+                    if (result.status === 'success') {
+                        document.getElementById('result').innerHTML = `URL rút gọn: <a href="${result.shortenedUrl}" target="_blank">${result.shortenedUrl}</a>`;
+                    } else {
+                        document.getElementById('result').textContent = `Lỗi: ${result.status}`;
+                    }
+                })
+                .catch(error => document.getElementById('result').textContent = `Lỗi: ${error}`);
+        }
+    </script>
+</body>
+</html>
